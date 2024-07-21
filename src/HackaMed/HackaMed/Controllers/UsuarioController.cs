@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entities;
+using Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HackaMed.Controllers
 {

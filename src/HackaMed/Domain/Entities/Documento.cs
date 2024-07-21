@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace Domain.Entities
 {
     public class Documento
     {
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string PacienteId { get; set; }
         public string Titulo { get; set; }
