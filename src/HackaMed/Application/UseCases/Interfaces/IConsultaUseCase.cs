@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Repositories
+namespace Application.UseCases.Interfaces
 {
-    public interface IConsultaRepository
+    public interface IConsultaUseCase
     {
         public Task<Consulta> CreateConsulta(Consulta consulta);
     }

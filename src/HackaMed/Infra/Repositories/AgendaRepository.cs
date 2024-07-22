@@ -22,7 +22,7 @@ namespace Infra.Repositories
             _collection = database.GetCollection<Agenda>("Agenda");
         }
 
-        public async Task<Agenda> CreatePedido(Agenda agenda)
+        public async Task<Agenda> CreateAgenda(Agenda agenda)
         {
             await _collection.InsertOneAsync(agenda);
             return agenda;

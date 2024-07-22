@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Repositories
+namespace Application.UseCases.Interfaces
 {
-    public interface IConsultaRepository
+    public interface IUsuarioUseCase
     {
-        public Task<Consulta> CreateConsulta(Consulta consulta);
+        public Task<Usuario> CreateUsuario(Usuario usuario);
     }
 }
