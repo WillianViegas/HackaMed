@@ -27,5 +27,25 @@ namespace Infra.Repositories
             await _collection.InsertOneAsync(consulta);
             return consulta;
         }
+
+        public async Task<IList<Consulta>> GetAllConsultas()
+        {
+            return await _collection.Find(_ => true).ToListAsync();
+        }
+
+        public async Task<Consulta> GetConsultaById(string id)
+        {
+            return await _collection.Find(x => x.Id.ToString() == id).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateConsulta(string id, Consulta usuario)
+        {
+            await _collection.ReplaceOneAsync(x => x.Id.ToString() == id, usuario);
+        }
+
+        public async Task DeleteConsulta(string id)
+        {
+            await _collection.DeleteOneAsync(x => x.Id == id);
+        }
     }
 }

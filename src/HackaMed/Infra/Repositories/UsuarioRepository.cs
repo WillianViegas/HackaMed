@@ -27,5 +27,25 @@ namespace Infra.Repositories
             await _collection.InsertOneAsync(usuario);
             return usuario;
         }
+
+        public async Task<IList<Usuario>> GetAllUsuarios()
+        {
+            return await _collection.Find(_ => true).ToListAsync();
+        }
+
+        public async Task<Usuario> GetUsuarioById(string id)
+        {
+            return await _collection.Find(x => x.Id.ToString() == id).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateUsuario(string id, Usuario usuario)
+        {
+            await _collection.ReplaceOneAsync(x => x.Id.ToString() == id, usuario);
+        }
+
+        public async Task DeleteUsuario(string id)
+        {
+            await _collection.DeleteOneAsync(x => x.Id == id);
+        }
     }
 }
