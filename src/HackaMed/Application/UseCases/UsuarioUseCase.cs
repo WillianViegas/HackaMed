@@ -39,5 +39,70 @@ namespace Application.UseCases
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<IList<Usuario>> GetAllUsuarios()
+        {
+            try
+            {
+                return await _usuarioRepository.GetAllUsuarios();
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Usuario> GetUsuarioById(string id)
+        {
+            try
+            {
+                var usuario = await _usuarioRepository.GetUsuarioById(id);
+                if (usuario == null) return new Usuario();
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task UpdateUsuario(string id, Usuario usuario)
+        {
+            try
+            {
+                var usuarioOriginal = await _usuarioRepository.GetUsuarioById(id);
+                if (usuarioOriginal is null) throw new Exception("Usuario não encontrado");
+
+                usuarioOriginal.Nome = usuario.Nome;
+                usuarioOriginal.Email = usuario.Email;
+                usuarioOriginal.CPF = usuario.CPF;
+
+                await _usuarioRepository.UpdateUsuario(id, usuarioOriginal);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task DeleteUsuario(string id)
+        {
+            try
+            {
+                var usuarioOriginal = await _usuarioRepository.GetUsuarioById(id);
+                if (usuarioOriginal is null) throw new Exception("Usuario não encontrado");
+
+                await _usuarioRepository.DeleteUsuario(id);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

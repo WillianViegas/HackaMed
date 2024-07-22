@@ -39,5 +39,71 @@ namespace Application.UseCases
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Agenda> GetAgendaById(string id)
+        {
+            try
+            {
+                var agenda = await _agendaRepository.GetAgendaById(id);
+                if (agenda == null) return new Agenda();
+
+                return agenda;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IList<Agenda>> GetAllAgendas()
+        {
+            try
+            {
+                return await _agendaRepository.GetAllAgendas();
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task UpdateAgenda(string id, Agenda agenda)
+        {
+            try
+            {
+                var agendaOriginal = await _agendaRepository.GetAgendaById(id);
+                if (agendaOriginal is null) throw new Exception("Agenda não encontrado");
+
+                agendaOriginal.Status = agenda.Status;
+                agendaOriginal.DataAlteracao = agenda.DataAlteracao;
+                agendaOriginal.DataAgendamento = agenda.DataAgendamento;
+                agendaOriginal.HorarioAgendamento = agenda.HorarioAgendamento;
+
+                await _agendaRepository.UpdateAgenda(id, agendaOriginal);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task DeleteAgenda(string id)
+        {
+            try
+            {
+                var agendaOriginal = await _agendaRepository.GetAgendaById(id);
+                if (agendaOriginal is null) throw new Exception("Agenda não encontrado");
+
+                await _agendaRepository.DeleteAgenda(id);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
