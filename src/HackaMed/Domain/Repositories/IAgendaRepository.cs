@@ -9,6 +9,6 @@ namespace Domain.Repositories
 {
     public interface IAgendaRepository
     {
-        public Task<Agenda> CreatePedido(Agenda agenda);
+        public Task<Agenda> CreateAgenda(Agenda agenda);
     }
 }

@@ -22,7 +22,7 @@ namespace Infra.Repositories
             _collection = database.GetCollection<Consulta>("Consulta");
         }
 
-        public async Task<Consulta> CreatePedido(Consulta consulta)
+        public async Task<Consulta> CreateConsulta(Consulta consulta)
         {
             await _collection.InsertOneAsync(consulta);
             return consulta;

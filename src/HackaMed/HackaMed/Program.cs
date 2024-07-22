@@ -1,3 +1,5 @@
+using Application.UseCases;
+using Application.UseCases.Interfaces;
 using Domain.Entities;
 using Domain.Repositories;
 using Infra.DatabaseConfig;
@@ -29,6 +31,9 @@ builder.Services.AddTransient<IConsultaRepository, ConsultaRepository>();
 builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection(nameof(DatabaseConfig)));
 builder.Services.AddSingleton<IDatabaseConfig>(sp => sp.GetRequiredService<IOptions<DatabaseConfig>>().Value);
 
+builder.Services.AddTransient<IUsuarioUseCase, UsuarioUseCase>();
+builder.Services.AddTransient<IAgendaUseCase, AgendaUseCase>();
+builder.Services.AddTransient<IConsultaUseCase, ConsultaUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(opts => opts.EnableAnnotations());
