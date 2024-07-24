@@ -10,8 +10,9 @@ namespace Domain.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string MedicoId { get; set; }
-        public DateTime DataAgendamento { get; set; }
+        public DateOnly DataAgendamento { get; set; }
         public string HorarioAgendamento { get; set; }
+        public decimal Valor { get; set; }
         public string Status { get; set; }
         public string DataCadastro { get; set; }
         public string DataAlteracao { get; set; }

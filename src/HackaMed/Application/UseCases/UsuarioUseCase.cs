@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.Interfaces;
 using Domain.Entities;
+using Domain.Helpers;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using System;

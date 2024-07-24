@@ -105,5 +105,20 @@ namespace Application.UseCases
                 throw new Exception(ex.Message);
             }
         }
+
+
+        public async Task<IList<Agenda>> GetAgendaByMedicoId(string id)
+        {
+            try
+            {
+                var agenda = await _agendaRepository.GetAgendaByMedicoId(id);
+                return agenda;
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

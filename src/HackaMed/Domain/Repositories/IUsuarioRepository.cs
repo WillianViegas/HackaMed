@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Domain.Repositories
         public Task<Usuario> GetUsuarioById(string id);
         public Task UpdateUsuario(string id, Usuario usuario);
         public Task DeleteUsuario(string id);
+        public Task<IList<Usuario>> GetAllMedicos(MedicoFilter medicoFilter);
+        public Task<Usuario> GetUsuarioByLogin(string usuario, string senha, string tipoIdentificacao);
     }
 }

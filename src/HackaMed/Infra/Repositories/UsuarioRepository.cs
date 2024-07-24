@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Helpers;
 using Domain.Repositories;
 using Infra.DatabaseConfig;
 using MongoDB.Driver;
@@ -46,6 +47,50 @@ namespace Infra.Repositories
         public async Task DeleteUsuario(string id)
         {
             await _collection.DeleteOneAsync(x => x.Id == id);
+        }
+
+        public async Task<IList<Usuario>> GetAllMedicos(MedicoFilter medicoFilter)
+        {
+            var medicos = await _collection.Find(x => x.Perfil == "Medico").ToListAsync();
+
+            //if (!string.IsNullOrEmpty(medicoFilter.Especialidade))
+            //    medicos = medicos.Where(x => x.Especialidade == medicoFilter.Especialidade).ToList();
+
+            //if (!string.IsNullOrEmpty(medicoFilter.DistanciaKM))
+            //    medicos = medicos.Where(x => x.DistanciaKM == medicoFilter.DistanciaKM).ToList();
+
+            //if (!string.IsNullOrEmpty(medicoFilter.Avaliacoes))
+            //    medicos = medicos.Where(x => x.Avaliacoes == medicoFilter.Avaliacoes).ToList();
+
+            return medicos;
+        }
+
+        public async Task<Usuario> GetUsuarioByLogin(string usuario, string senha, string tipoIdentificacao)
+        {
+            var usuarioLogin = new Usuario();
+
+            switch (tipoIdentificacao)
+            {
+                case "Email":
+                    {
+                        usuarioLogin = await _collection.Find(x => x.Email == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        break;
+                    }
+
+                case "CPF":
+                    {
+                        usuarioLogin = await _collection.Find(x => x.CPF == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        break;
+                    }
+
+                case "CRM":
+                    {
+                        usuarioLogin = await _collection.Find(x => x.CRM == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        break;
+                    }
+            }
+
+            return usuarioLogin;
         }
     }
 }
