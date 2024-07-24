@@ -141,5 +141,27 @@ namespace HackaMed.Controllers
                 return TypedResults.Problem(erro);
             }
         }
+
+        [HttpGet("GetAgendaByMedicoId/{id}")]
+        public async Task<IResult> GetAgendaByMedicoId(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    return TypedResults.BadRequest("Id inválido");
+
+
+                var agenda = await _agendaUseCase.GetAgendaByMedicoId(id);
+                if (!agenda.Any()) return TypedResults.NotFound("Agenda não encontrada");
+
+                return TypedResults.Ok(agenda);
+            }
+            catch (Exception ex)
+            {
+                var erro = $"Erro ao buscar agenda pelo id. Id: {id}";
+                _logger.LogError(erro, ex);
+                return TypedResults.Problem(erro);
+            }
+        }
     }
 }

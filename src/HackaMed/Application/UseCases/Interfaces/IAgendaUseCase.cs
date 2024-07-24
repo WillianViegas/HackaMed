@@ -14,5 +14,6 @@ namespace Application.UseCases.Interfaces
         public Task<Agenda> GetAgendaById(string id);
         public Task UpdateAgenda(string id, Agenda agenda);
         public Task DeleteAgenda(string id);
+        public Task<IList<Agenda>> GetAgendaByMedicoId(string id);
     }
 }

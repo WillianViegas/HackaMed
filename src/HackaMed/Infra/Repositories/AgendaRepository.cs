@@ -47,5 +47,10 @@ namespace Infra.Repositories
         {
             await _collection.DeleteOneAsync(x => x.Id == id);
         }
+
+        public async Task<IList<Agenda>> GetAgendaByMedicoId(string id)
+        {
+            return await _collection.Find(x => x.MedicoId.ToString() == id).ToListAsync();
+        }
     }
 }

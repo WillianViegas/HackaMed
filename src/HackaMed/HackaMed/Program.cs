@@ -27,6 +27,7 @@ builder.Services.AddSingleton<IMongoCollection<Consulta>>(provider => provider.G
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<IAgendaRepository, AgendaRepository>();
 builder.Services.AddTransient<IConsultaRepository, ConsultaRepository>();
+builder.Services.AddTransient<IProntuarioRepository, ProntuarioRepository>();
 
 builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection(nameof(DatabaseConfig)));
 builder.Services.AddSingleton<IDatabaseConfig>(sp => sp.GetRequiredService<IOptions<DatabaseConfig>>().Value);
@@ -34,6 +35,8 @@ builder.Services.AddSingleton<IDatabaseConfig>(sp => sp.GetRequiredService<IOpti
 builder.Services.AddTransient<IUsuarioUseCase, UsuarioUseCase>();
 builder.Services.AddTransient<IAgendaUseCase, AgendaUseCase>();
 builder.Services.AddTransient<IConsultaUseCase, ConsultaUseCase>();
+builder.Services.AddTransient<ILoginUseCase, LoginUseCase>();
+builder.Services.AddTransient<IPacienteUseCase, PacienteUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(opts => opts.EnableAnnotations());

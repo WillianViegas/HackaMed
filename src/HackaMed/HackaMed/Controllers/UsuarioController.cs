@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Domain.Helpers;
 
 namespace HackaMed.Controllers
 {
