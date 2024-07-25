@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enum;
 using Domain.Helpers;
 using Domain.Repositories;
 using Infra.DatabaseConfig;
@@ -51,7 +52,7 @@ namespace Infra.Repositories
 
         public async Task<IList<Usuario>> GetAllMedicos(MedicoFilter medicoFilter)
         {
-            var medicos = await _collection.Find(x => x.Perfil == "Medico").ToListAsync();
+            var medicos = await _collection.Find(x => x.Perfil == EnumPerfil.Medico.ToString()).ToListAsync();
 
             //if (!string.IsNullOrEmpty(medicoFilter.Especialidade))
             //    medicos = medicos.Where(x => x.Especialidade == medicoFilter.Especialidade).ToList();

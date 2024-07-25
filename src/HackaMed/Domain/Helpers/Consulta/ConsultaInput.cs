@@ -11,5 +11,6 @@ namespace Domain.Helpers.Consulta
         public string PacienteId { get; set; }
         public string MedicoId { get; set; }
         public string AgendamentoId { get; set; }
+        public bool Teleconsulta { get; set; }
     }
 }

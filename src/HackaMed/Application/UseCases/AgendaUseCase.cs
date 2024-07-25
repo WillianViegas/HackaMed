@@ -26,6 +26,9 @@ namespace Application.UseCases
         {
             try
             {
+                agenda.DataCadastro = DateTime.Now;
+                agenda.DataAlteracao = DateTime.Now;
+
                 return await _agendaRepository.CreateAgenda(agenda);
             }
             catch (ValidationException ex)
@@ -77,9 +80,13 @@ namespace Application.UseCases
                 if (agendaOriginal is null) throw new Exception("Agenda não encontrado");
 
                 agendaOriginal.Status = agenda.Status;
-                agendaOriginal.DataAlteracao = agenda.DataAlteracao;
-                agendaOriginal.DataAgendamento = agenda.DataAgendamento;
-                agendaOriginal.HorarioAgendamento = agenda.HorarioAgendamento;
+                agendaOriginal.DataAlteracao = DateTime.Now;
+
+                if(agenda.DataAgendamento != null)
+                    agendaOriginal.DataAgendamento = agenda.DataAgendamento;
+
+                if (!string.IsNullOrEmpty(agenda.HorarioAgendamento))
+                    agendaOriginal.HorarioAgendamento = agenda.HorarioAgendamento;
 
                 await _agendaRepository.UpdateAgenda(id, agendaOriginal);
             }
