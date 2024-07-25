@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.Interfaces;
 using Domain.Entities;
+using Domain.Enum;
 using Domain.Helpers.Consulta;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
@@ -16,12 +17,14 @@ namespace Application.UseCases
     {
         private readonly IConsultaRepository _consultaRepository;
         private readonly IAgendaRepository _agendaRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly ILogger<ConsultaUseCase> _log;
 
-        public ConsultaUseCase(IConsultaRepository consultaRepository, IAgendaRepository agendaRepository, ILogger<ConsultaUseCase> log)
+        public ConsultaUseCase(IConsultaRepository consultaRepository, IAgendaRepository agendaRepository, IUsuarioRepository usuarioRepository,  ILogger<ConsultaUseCase> log)
         {
             _consultaRepository = consultaRepository;
             _agendaRepository = agendaRepository;
+            _usuarioRepository = usuarioRepository;
             _log = log;
         }
 
@@ -31,16 +34,35 @@ namespace Application.UseCases
             {
                 var agenda = await _agendaRepository.GetAgendaById(consulta.AgendamentoId);
 
+                if (agenda == null)
+                    throw new ValidationException("Agenda não encontrada para marcar a consulta.");
+
+                if (agenda.Status == EnumAgenda.Indisponível.ToString())
+                    throw new ValidationException("Agenda não disponível para marcar a consulta.");
+
+                var medico = await _usuarioRepository.GetUsuarioById(consulta.MedicoId);
+
+                if(medico == null)
+                    throw new ValidationException("Médico responsável pelo agendamento não encontrado.");
+
+                var consultas = await _consultaRepository.GetAllConsultas();
+
+                if (consultas.Any(x => x.PacienteId == consulta.PacienteId && x.AgendaId == consulta.AgendamentoId))
+                    throw new ValidationException("Você já solicitou uma consulta para essa data");
+
                 var newConsulta = new Consulta()
                 {
                     MedicoId = consulta.MedicoId,
                     PacienteId = consulta.PacienteId,
-                    DataConsulta = agenda.DataAgendamento,
+                    AgendaId = consulta.AgendamentoId,
+                    DataConsulta = (DateOnly)agenda.DataAgendamento,
                     HorarioConsulta = agenda.HorarioAgendamento,
-                    Valor = agenda.Valor,
+                    Valor = (decimal)agenda.Valor,
                     DataCadastro = DateTime.Now,
                     DataAlteracao = DateTime.Now,
-                    Status = "Pendente"
+                    Status = EnumConsulta.Pendente.ToString(),
+                    Teleconsulta = consulta.Teleconsulta,
+                    EnderecoConsulta = consulta.Teleconsulta ? null : medico.Endereco
                 };
 
                 return await _consultaRepository.CreateConsulta(newConsulta);
@@ -127,19 +149,44 @@ namespace Application.UseCases
             try
             {
                 var consultaOriginal = await _consultaRepository.GetConsultaById(id);
-                if (consultaOriginal is null) throw new Exception("Usuario não encontrado");
+                if (consultaOriginal is null) throw new ValidationException("Usuario não encontrado");
 
-                if (consultaOriginal.Status == "Cancelada" && status == "Aprovada")
-                    throw new Exception("Não é possível ativar uma consulta cancelada");
+                if ((consultaOriginal.Status == EnumConsulta.Cancelada.ToString() || consultaOriginal.Status == EnumConsulta.Recusada.ToString()) && status == EnumConsulta.Aprovada.ToString())
+                    throw new ValidationException("Não é possível aprovar uma consulta cancelada ou recusada");
 
-                //consultaOriginal.Link = ""; GERAR LINK PARA A REUNIÃO
-                //Lembrar de deixar o status indisponivel da respectiva agenda ao aceitar a consulta
-
+             
                 consultaOriginal.Status = status;
                 consultaOriginal.DescricaoCancelamento = descricao;
                 consultaOriginal.DataAlteracao = DateTime.Now;
 
+                var agenda = await _agendaRepository.GetAgendaById(consultaOriginal.AgendaId);
+                if (agenda is null) throw new ValidationException("Agenda não encontrada");
+
+                if (status == EnumConsulta.Aprovada.ToString())
+                {
+                    var baseUrl = "https://meet.jit.si/";
+                    var meetingId = Guid.NewGuid().ToString();
+                    var meetingUrl = baseUrl + meetingId;
+                    consultaOriginal.Link = meetingUrl;
+
+                    agenda.Status = EnumAgenda.Indisponível.ToString();
+                   await _agendaRepository.UpdateAgenda(consultaOriginal.AgendaId, agenda);
+                }
+                else
+                {
+                    if(agenda.Status == EnumAgenda.Indisponível.ToString())
+                    {
+                        agenda.Status = EnumAgenda.Disponível.ToString();
+                        await _agendaRepository.UpdateAgenda(consultaOriginal.AgendaId, agenda);
+                    }
+                }
+
                 await _consultaRepository.UpdateConsulta(id, consultaOriginal);
+            }
+            catch(ValidationException ex)
+            {
+                _log.LogError(ex.Message);
+                throw;
             }
             catch (Exception ex)
             {

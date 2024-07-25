@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.Interfaces;
 using Domain.Entities;
+using Domain.Enum;
 using Domain.Helpers.Login;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ namespace Application.UseCases
                 var tipoIdentificacao = "";
 
                 //validar se usuario é medico ou paciente
-                if (loginInput.Perfil == "Paciente")
+                if (loginInput.Perfil == EnumPerfil.Paciente.ToString())
                 {
                     if((string.IsNullOrEmpty(loginInput.Email) && string.IsNullOrEmpty(loginInput.CPF)) || string.IsNullOrEmpty(loginInput.Senha))
                     {
@@ -46,7 +47,7 @@ namespace Application.UseCases
                     senha = loginInput.Senha;
                 }
 
-                if(loginInput.Perfil == "Medico")
+                if(loginInput.Perfil == EnumPerfil.Medico.ToString())
                 {
 
                     if (string.IsNullOrEmpty(loginInput.CRM) || string.IsNullOrEmpty(loginInput.Senha))

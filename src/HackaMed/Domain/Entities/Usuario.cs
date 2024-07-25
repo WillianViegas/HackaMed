@@ -16,6 +16,7 @@ namespace Domain.Entities
         public string Perfil { get; set; }
         public string Status { get; set; }
         public string Especialidade { get; set; }
+        public Endereco Endereco { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAlteracao { get; set; }
     }

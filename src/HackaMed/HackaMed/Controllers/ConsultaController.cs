@@ -3,7 +3,9 @@ using Application.UseCases.Interfaces;
 using Domain.Entities;
 using Domain.Helpers.Consulta;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HackaMed.Controllers
 {
@@ -49,10 +51,8 @@ namespace HackaMed.Controllers
             }
             catch (ValidationException ex)
             {
-                var error = "Erro ao criar consulta";
-
-                _logger.LogError(error, ex);
-                return TypedResults.BadRequest(error);
+                _logger.LogError(ex.Message, ex);
+                return TypedResults.BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -160,6 +160,11 @@ namespace HackaMed.Controllers
                 await _consultaUseCase.UpdateConsultaStatus(id, "Cancelada", descricao);
                 return TypedResults.NoContent();
             }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return TypedResults.Problem(ex.Message);
+            }
             catch (Exception ex)
             {
                 var erro = $"Erro ao atualizar o consulta. Id: {id}";
@@ -169,7 +174,7 @@ namespace HackaMed.Controllers
         }
 
         [HttpPut("AprovarConsulta/{id}")]
-        public async Task<IResult> AprovarConsulta(string id, string status)
+        public async Task<IResult> AprovarConsulta(string id)
         {
             try
             {
@@ -181,6 +186,38 @@ namespace HackaMed.Controllers
 
                 await _consultaUseCase.UpdateConsultaStatus(id, "Aprovada");
                 return TypedResults.NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return TypedResults.Problem(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                var erro = $"Erro ao atualizar o consulta. Id: {id}";
+                _logger.LogError(erro, ex);
+                return TypedResults.Problem(erro);
+            }
+        }
+
+        [HttpPut("RecusarConsulta/{id}")]
+        public async Task<IResult> RecusarConsulta(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    return TypedResults.BadRequest("Id inválido");
+
+                var consultaOriginal = await _consultaUseCase.GetConsultaById(id);
+                if (consultaOriginal is null || string.IsNullOrEmpty(consultaOriginal.Id)) return TypedResults.NotFound("Consulta não encontrada");
+
+                await _consultaUseCase.UpdateConsultaStatus(id, "Recusada");
+                return TypedResults.NoContent();
+            }
+            catch(ValidationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return TypedResults.Problem(ex.Message);
             }
             catch (Exception ex)
             {
