@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackaMed", "HackaMed\HackaMed.csproj", "{BFEF0A04-932E-4418-9DA7-19746B0E45FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackaMed", "HackaMed\HackaMed.csproj", "{BFEF0A04-932E-4418-9DA7-19746B0E45FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapter", "Adapter", "{55A70F6F-5A4D-4755-94BB-572BF1ADB72F}"
 EndProject
@@ -15,13 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{397C9C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driver", "Driver", "{B3EDB048-4126-436E-BC45-51F54E97A295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "Infra\Infra.csproj", "{C2FFF118-872C-4623-A396-697FB9479C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Infra\Infra.csproj", "{C2FFF118-872C-4623-A396-697FB9479C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{373EAC97-6B9D-4D5C-B949-A87769D008EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{373EAC97-6B9D-4D5C-B949-A87769D008EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F2441F1A-2389-4C96-B9B6-9D966D21CBB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{F2441F1A-2389-4C96-B9B6-9D966D21CBB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackaMedTests", "HackaMedTests\HackaMedTests.csproj", "{C62E3FCB-9893-4B99-93C4-1818708B8DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackaMedTests", "HackaMedTests\HackaMedTests.csproj", "{C62E3FCB-9893-4B99-93C4-1818708B8DD8}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{13790CD9-CA4E-4025-8009-D318635D5AA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{C62E3FCB-9893-4B99-93C4-1818708B8DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C62E3FCB-9893-4B99-93C4-1818708B8DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C62E3FCB-9893-4B99-93C4-1818708B8DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13790CD9-CA4E-4025-8009-D318635D5AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13790CD9-CA4E-4025-8009-D318635D5AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13790CD9-CA4E-4025-8009-D318635D5AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13790CD9-CA4E-4025-8009-D318635D5AA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

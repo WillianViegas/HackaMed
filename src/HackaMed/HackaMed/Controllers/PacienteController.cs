@@ -15,7 +15,7 @@ namespace HackaMed.Controllers
         private readonly IPacienteUseCase _pacienteUseCase;
 
 
-        public PacienteController(ILogger<UsuarioController> logger, IUsuarioUseCase usuarioUseCase, IPacienteUseCase pacienteUseCase )
+        public PacienteController(ILogger<UsuarioController> logger, IUsuarioUseCase usuarioUseCase, IPacienteUseCase pacienteUseCase)
         {
             _logger = logger;
             _usuarioUseCase = usuarioUseCase;
@@ -62,11 +62,17 @@ namespace HackaMed.Controllers
         }
 
         [HttpPut("AdicionarDocumento/")]
-        public async Task<IResult> AdicionarDocumento(Documento documento)
+        public async Task<IResult> AdicionarDocumento([FromForm] Documento documento, IFormFile file)
         {
             try
             {
-                var prontuario = await _pacienteUseCase.AdicionarDocumento(documento);
+
+                if (file == null || file.Length == 0)
+                {
+                    return TypedResults.BadRequest("Nenhum arquivo selecionado para upload.");
+                }
+
+                var prontuario = await _pacienteUseCase.AdicionarDocumento(documento, file);
                 return TypedResults.Ok(prontuario);
             }
             catch (ValidationException ex)

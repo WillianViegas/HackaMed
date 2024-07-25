@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Application.UseCases.Interfaces
     {
         public Task<IList<Medico>> GetAllMedicos(MedicoFilter medicoFilter);
         public Task<Prontuario> CadastrarProntuario(Prontuario prontuario);
-        public Task<Prontuario> AdicionarDocumento(Documento documento);
+        public Task<Prontuario> AdicionarDocumento(Documento documento, IFormFile file);
         public Task<Prontuario> RemoverDocumento(Documento documento);
     }
 }
