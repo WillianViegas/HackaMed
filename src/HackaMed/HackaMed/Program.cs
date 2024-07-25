@@ -1,3 +1,4 @@
+using Amazon.S3;
 using Application.UseCases;
 using Application.UseCases.Interfaces;
 using Domain.Entities;
@@ -31,6 +32,7 @@ builder.Services.AddTransient<IProntuarioRepository, ProntuarioRepository>();
 
 builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection(nameof(DatabaseConfig)));
 builder.Services.AddSingleton<IDatabaseConfig>(sp => sp.GetRequiredService<IOptions<DatabaseConfig>>().Value);
+builder.Services.AddTransient<IAmazonS3, AmazonS3Client>();
 
 builder.Services.AddTransient<IUsuarioUseCase, UsuarioUseCase>();
 builder.Services.AddTransient<IAgendaUseCase, AgendaUseCase>();

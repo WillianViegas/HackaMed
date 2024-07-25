@@ -1,7 +1,11 @@
-﻿using Application.UseCases.Interfaces;
+﻿using Amazon;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Application.UseCases.Interfaces;
 using Domain.Entities;
 using Domain.Helpers;
 using Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,12 +21,16 @@ namespace Application.UseCases
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IProntuarioRepository _prontuarioRepository;
         private readonly ILogger<PacienteUseCase> _log;
+        private static IAmazonS3 _s3Client;
+        private const string bucketName = "prontuario-bkt";
+        private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
 
-        public PacienteUseCase(IUsuarioRepository usuarioRepository, IProntuarioRepository prontuarioRepository, ILogger<PacienteUseCase> log)
+        public PacienteUseCase(IUsuarioRepository usuarioRepository, IProntuarioRepository prontuarioRepository, ILogger<PacienteUseCase> log, IAmazonS3 s3client)
         {
             _usuarioRepository = usuarioRepository;
             _prontuarioRepository = prontuarioRepository;
             _log = log;
+            _s3Client = s3client;
         }
         public async Task<IList<Medico>> GetAllMedicos(MedicoFilter medicoFilter)
         {
@@ -83,7 +91,7 @@ namespace Application.UseCases
             }
         }
 
-        public async Task<Prontuario> AdicionarDocumento(Documento documento)
+        public async Task<Prontuario> AdicionarDocumento(Documento documento, IFormFile file)
         {
             try
             {
@@ -98,9 +106,30 @@ namespace Application.UseCases
                 documento.DataCadastro = DateTime.Now;
                 documento.DataAlteracao = DateTime.Now;
 
-                //Receber doc na requisição
-                //upar doc na aws ou afins e salvar a url posteriomente;
 
+                var keyName = $"{documento.PacienteId}/{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+                var fileUrl = $"https://{bucketName}.s3.{bucketRegion.SystemName}.amazonaws.com/{keyName}";
+
+
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    stream.Position = 0;
+
+                    var fileTransferUtilityRequest = new TransferUtilityUploadRequest
+                    {
+                        InputStream = stream,
+                        Key = keyName,
+                        BucketName = bucketName,
+                        CannedACL = S3CannedACL.Private, // Defina as permissões do objeto
+                        ServerSideEncryptionMethod = ServerSideEncryptionMethod.AES256 // Criptografia no servidor
+                    };
+
+                    var fileTransferUtility = new TransferUtility(_s3Client);
+                    await fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
+                }
+
+                documento.Url = fileUrl;
                 prontuario.Documentos.Add(documento);
                 await _prontuarioRepository.UpdateProntuario(prontuario.Id, prontuario);
 
