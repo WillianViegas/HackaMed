@@ -85,7 +85,7 @@ jobs:
       run:  |
          cd src
          cd HackaMed
-         kubectl delete -f ./k8s/
+         kubectl delete -f ./k8s/ || true
 
 
     - name: Update Kubernetes ConfigMap
