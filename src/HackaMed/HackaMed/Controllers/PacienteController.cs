@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
 namespace HackaMed.Controllers
@@ -31,6 +32,30 @@ namespace HackaMed.Controllers
                 if (!medicos.Any()) return TypedResults.NotFound("Usuário não encontrado");
 
                 return TypedResults.Ok(medicos);
+            }
+            catch (Exception ex)
+            {
+                var erro = $"Erro ao buscar lista de médicos";
+                _logger.LogError(erro, ex);
+                return TypedResults.Problem(erro);
+            }
+        }
+
+
+        [HttpGet("GetProntuarioByPacienteId/{id}")]
+        public async Task<IResult> GetProntuarioByPacienteId(string id)
+        {
+            try
+            {
+                var prontuario = await _pacienteUseCase.GetProntuarioByPacienteId(id);
+                if (prontuario is null || prontuario.Id is null) return TypedResults.NotFound("Nenhum prontuário encontrado.");
+
+                return TypedResults.Ok(prontuario);
+            }
+            catch(ValidationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return TypedResults.BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -83,8 +108,9 @@ namespace HackaMed.Controllers
             catch (Exception ex)
             {
                 var erro = $"Erro ao adicionar documento ao prontuário.";
-                _logger.LogError(erro, ex);
-                return TypedResults.Problem(erro);
+                _logger.LogError(ex.Message, ex);
+                Console.WriteLine(ex.Message);
+                return TypedResults.Problem(ex.Message);
             }
         }
 

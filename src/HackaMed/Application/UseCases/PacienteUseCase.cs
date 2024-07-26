@@ -91,6 +91,25 @@ namespace Application.UseCases
             }
         }
 
+        public async Task<Prontuario> GetProntuarioByPacienteId(string pacienteId)
+        {
+            try
+            {
+                var prontuario = await _prontuarioRepository.GetProntuarioByPacienteId(pacienteId);
+                return prontuario;
+            }
+            catch (ValidationException ex)
+            {
+                _log.LogError(ex.Message);
+                throw new ValidationException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Prontuario> AdicionarDocumento(Documento documento, IFormFile file)
         {
             try

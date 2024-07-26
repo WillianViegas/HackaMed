@@ -15,5 +15,6 @@ namespace Application.UseCases.Interfaces
         public Task<Prontuario> CadastrarProntuario(Prontuario prontuario);
         public Task<Prontuario> AdicionarDocumento(Documento documento, IFormFile file);
         public Task<Prontuario> RemoverDocumento(Documento documento);
+        public Task<Prontuario> GetProntuarioByPacienteId(string pacienteId);
     }
 }
