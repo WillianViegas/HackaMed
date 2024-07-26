@@ -61,12 +61,14 @@ namespace Application.UseCases
                 }
 
                 // fazer respectiva validacao
-                var usuarioLogin = await _usuarioRepository.GetUsuarioByLogin(usuario, senha, tipoIdentificacao);
+                var usuarioLogin = await _usuarioRepository.GetUsuarioByLogin(usuario, tipoIdentificacao);
 
                 //retornar usuario autenticado
                 if (usuarioLogin == null || String.IsNullOrEmpty(usuarioLogin.Id))
                     throw new ValidationException("Login inválido!");
 
+               if(!BCrypt.Net.BCrypt.Verify(senha, usuarioLogin.Senha))
+                    throw new ValidationException("Login inválido!");
 
                 var loginReponse = new LoginResponse()
                 {

@@ -66,7 +66,7 @@ namespace Infra.Repositories
             return medicos;
         }
 
-        public async Task<Usuario> GetUsuarioByLogin(string usuario, string senha, string tipoIdentificacao)
+        public async Task<Usuario> GetUsuarioByLogin(string usuario, string tipoIdentificacao)
         {
             var usuarioLogin = new Usuario();
 
@@ -74,19 +74,19 @@ namespace Infra.Repositories
             {
                 case "Email":
                     {
-                        usuarioLogin = await _collection.Find(x => x.Email == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        usuarioLogin = await _collection.Find(x => x.Email == usuario && x.Perfil == EnumPerfil.Paciente.ToString()).FirstOrDefaultAsync();
                         break;
                     }
 
                 case "CPF":
                     {
-                        usuarioLogin = await _collection.Find(x => x.CPF == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        usuarioLogin = await _collection.Find(x => x.CPF == usuario && x.Perfil == EnumPerfil.Paciente.ToString()).FirstOrDefaultAsync();
                         break;
                     }
 
                 case "CRM":
                     {
-                        usuarioLogin = await _collection.Find(x => x.CRM == usuario && x.Senha == senha).FirstOrDefaultAsync();
+                        usuarioLogin = await _collection.Find(x => x.CRM == usuario && x.Perfil == EnumPerfil.Medico.ToString()).FirstOrDefaultAsync();
                         break;
                     }
             }

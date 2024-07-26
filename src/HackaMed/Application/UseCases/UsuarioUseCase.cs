@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.Interfaces;
 using Domain.Entities;
+using Domain.Entities.DTO;
 using Domain.Helpers;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
@@ -27,6 +28,9 @@ namespace Application.UseCases
         {
             try
             {
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+                usuario.Senha = passwordHash;
+
                 return await _usuarioRepository.CreateUsuario(usuario);
             }
             catch (ValidationException ex)
@@ -41,11 +45,26 @@ namespace Application.UseCases
             }
         }
 
-        public async Task<IList<Usuario>> GetAllUsuarios()
+        public async Task<IList<UsuarioDTO>> GetAllUsuarios()
         {
             try
             {
-                return await _usuarioRepository.GetAllUsuarios();
+                var listaUsuarios = await _usuarioRepository.GetAllUsuarios();
+
+                return listaUsuarios.Select(x => new UsuarioDTO()
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    CPF = x.CPF,
+                    Email = x.Email,
+                    CRM = x.CRM,
+                    Status = x.Status,
+                    Especialidade = x.Especialidade,
+                    Perfil = x.Perfil,
+                    Endereco = x.Endereco,
+                    DataCadastro = x.DataCadastro,
+                    DataAlteracao = x.DataAlteracao,
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -54,14 +73,29 @@ namespace Application.UseCases
             }
         }
 
-        public async Task<Usuario> GetUsuarioById(string id)
+        public async Task<UsuarioDTO> GetUsuarioById(string id)
         {
             try
             {
                 var usuario = await _usuarioRepository.GetUsuarioById(id);
-                if (usuario == null) return new Usuario();
+                if (usuario == null) return new UsuarioDTO();
 
-                return usuario;
+                var usuarioDTO = new UsuarioDTO()
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    CPF = usuario.CPF,
+                    Email = usuario.Email,
+                    CRM = usuario.CRM,
+                    Status = usuario.Status,
+                    Especialidade = usuario.Especialidade,
+                    Perfil = usuario.Perfil,
+                    Endereco = usuario.Endereco,
+                    DataCadastro = usuario.DataCadastro,
+                    DataAlteracao = usuario.DataAlteracao
+                };
+
+                return usuarioDTO;
             }
             catch (Exception ex)
             {

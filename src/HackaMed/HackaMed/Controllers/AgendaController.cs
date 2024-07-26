@@ -21,19 +21,6 @@ namespace HackaMed.Controllers
             _agendaUseCase = agendaUseCase;
         }
 
-        [HttpGet("/teste-agenda")]
-        public IResult Teste()
-        {
-            try
-            {
-                return TypedResults.Ok("Teste");
-            }
-            catch (Exception ex)
-            {
-                return TypedResults.Problem(ex.Message);
-            }
-        }
-
         [HttpPost]
         public async Task<IResult> CreateAgenda(Agenda agenda)
         {
@@ -43,7 +30,7 @@ namespace HackaMed.Controllers
                     return TypedResults.BadRequest("Dados da agenda inválidos");
 
                 agenda = await _agendaUseCase.CreateAgenda(agenda);
-                return TypedResults.Created($"/usuario/{agenda.Id}", agenda);
+                return TypedResults.Created($"/agenda/{agenda.Id}", agenda);
             }
             catch (ValidationException ex)
             {
