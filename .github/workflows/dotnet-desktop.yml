@@ -81,6 +81,13 @@ jobs:
     - name: Update kubeconfig
       run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
+    - name: Delete from EKS
+      run:  |
+         cd src
+         cd HackaMed
+         kubectl delete -f ./k8s/
+
+
     - name: Update Kubernetes ConfigMap
       run: |
          kubectl create configmap my-config \
