@@ -70,6 +70,12 @@ jobs:
       with:
         version: 'v1.18.0'
 
+    - name: Update kubeconfig
+      run: |
+         cd src
+         cd HackaMed
+         aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+
     - name: Update Kubernetes ConfigMap
       run: |
         # Baixar o ConfigMap existente
@@ -80,9 +86,5 @@ jobs:
         sed -i 's/AWS_REGION:.*/AWS_REGION: '${{ steps.set-configmap-variables.outputs.aws_region }}'/' configmap.yaml
       
 
-      # - name: Deploy to EKS
-     #   run: |
-     #    cd src
-     #   cd HackaMed
-      #   aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-      #   kubectl apply -f ./k8s/
+    - name: Deploy to EKS
+      run: kubectl apply -f ./k8s/
