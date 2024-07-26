@@ -113,7 +113,7 @@ namespace Application.UseCases
             try
             {
                 var consultaOriginal = await _consultaRepository.GetConsultaById(id);
-                if (consultaOriginal is null) throw new Exception("Usuario não encontrado");
+                if (consultaOriginal is null) throw new Exception("Consulta não encontrada");
 
                 consultaOriginal.Status = consulta.Status;
                 consultaOriginal.Link = consulta.Link;
@@ -133,7 +133,7 @@ namespace Application.UseCases
             try
             {
                 var agendaOriginal = await _consultaRepository.GetConsultaById(id);
-                if (agendaOriginal is null) throw new Exception("Consulta não encontrado");
+                if (agendaOriginal is null) throw new Exception("Consulta não encontrada");
 
                 await _consultaRepository.DeleteConsulta(id);
             }
@@ -149,7 +149,7 @@ namespace Application.UseCases
             try
             {
                 var consultaOriginal = await _consultaRepository.GetConsultaById(id);
-                if (consultaOriginal is null) throw new ValidationException("Usuario não encontrado");
+                if (consultaOriginal is null) throw new ValidationException("Consulta não encontrada");
 
                 if ((consultaOriginal.Status == EnumConsulta.Cancelada.ToString() || consultaOriginal.Status == EnumConsulta.Recusada.ToString()) && status == EnumConsulta.Aprovada.ToString())
                     throw new ValidationException("Não é possível aprovar uma consulta cancelada ou recusada");

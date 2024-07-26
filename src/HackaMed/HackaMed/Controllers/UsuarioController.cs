@@ -24,19 +24,6 @@ namespace HackaMed.Controllers
             _usuarioUseCase = usuarioUseCase;
         }
 
-        [HttpGet("/teste-usuario")]
-        public IResult Teste()
-        {
-            try
-            {
-                return TypedResults.Ok("Teste");
-            }
-            catch (Exception ex)
-            {
-                return TypedResults.Problem(ex.Message);
-            }
-        }
-
         #region Usuário
         [HttpPost]
         public async Task<IResult> CreateUsuario(Usuario usuario)

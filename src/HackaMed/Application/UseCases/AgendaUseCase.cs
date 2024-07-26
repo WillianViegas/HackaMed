@@ -77,7 +77,7 @@ namespace Application.UseCases
             try
             {
                 var agendaOriginal = await _agendaRepository.GetAgendaById(id);
-                if (agendaOriginal is null) throw new Exception("Agenda não encontrado");
+                if (agendaOriginal is null) throw new Exception("Agenda não encontrada");
 
                 agendaOriginal.Status = agenda.Status;
                 agendaOriginal.DataAlteracao = DateTime.Now;
@@ -102,7 +102,7 @@ namespace Application.UseCases
             try
             {
                 var agendaOriginal = await _agendaRepository.GetAgendaById(id);
-                if (agendaOriginal is null) throw new Exception("Agenda não encontrado");
+                if (agendaOriginal is null) throw new Exception("Agenda não encontrada");
 
                 await _agendaRepository.DeleteAgenda(id);
             }

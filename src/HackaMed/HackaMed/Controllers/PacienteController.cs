@@ -13,14 +13,12 @@ namespace HackaMed.Controllers
     public class PacienteController
     {
         private readonly ILogger<UsuarioController> _logger;
-        private readonly IUsuarioUseCase _usuarioUseCase;
         private readonly IPacienteUseCase _pacienteUseCase;
 
 
-        public PacienteController(ILogger<UsuarioController> logger, IUsuarioUseCase usuarioUseCase, IPacienteUseCase pacienteUseCase)
+        public PacienteController(ILogger<UsuarioController> logger, IPacienteUseCase pacienteUseCase)
         {
             _logger = logger;
-            _usuarioUseCase = usuarioUseCase;
             _pacienteUseCase = pacienteUseCase;
         }
 

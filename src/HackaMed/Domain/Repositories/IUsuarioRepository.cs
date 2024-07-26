@@ -16,6 +16,6 @@ namespace Domain.Repositories
         public Task UpdateUsuario(string id, Usuario usuario);
         public Task DeleteUsuario(string id);
         public Task<IList<Usuario>> GetAllMedicos(MedicoFilter medicoFilter);
-        public Task<Usuario> GetUsuarioByLogin(string usuario, string senha, string tipoIdentificacao);
+        public Task<Usuario> GetUsuarioByLogin(string usuario, string tipoIdentificacao);
     }
 }
