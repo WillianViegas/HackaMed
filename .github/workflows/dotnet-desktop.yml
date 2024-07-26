@@ -114,7 +114,7 @@ jobs:
 
     - name: Update Kubernetes Deployment
       run: |
-        kubectl set image deployment/hackamed hackamed-container=${{ secrets.AWS_REGISTRY_URL }}:hackamed-img-${{ env.TIMESTAMP }}
+        kubectl set image deployment/hackamed hackamed=${{ secrets.AWS_REGISTRY_URL }}:hackamed-img-${{ env.TIMESTAMP }}
 
     - name: Rollout Restart
       run: |
