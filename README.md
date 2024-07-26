@@ -31,7 +31,7 @@ Além do desenho de arquitetura foi solicitado um MVP do projeto para exemplific
 2. Escalabilidade
 3. Segurança
 
-## Estutura
+## Estrutura
  - Banco de dados = MongoDB
  - Serviços AWS utilizados dentro do projeto = S3 ( É utilizado para salvar os documentos do prontuário do paciente )
  - Serviços AWS utilizado fora do projeto = ECR, EKS, IAM, CloudWatch
@@ -59,6 +59,7 @@ Para executa-lo você tem 3 opções:
 - Executa-lo via Kubernetes (mais abaixo deixarei alguns passos para fazer junto da documentação do kubernetes)
 
 Vou deixar disponível a collection do postman que usei para testar os fluxos dentro da Pasta do Projeto para facilitar a separação e testes do projeto.
+- Caminho: `HackaMed\src\HackaMed\Collections`
 Basta importa-la no seu postman e alterar o endpoint das requisições para a sua respectiva porta de projeto
 
 Com o projeto rodando você pode acessar o swagger para ver as requisições disponíveis. Lembrando que foi implementado a autenticação JWT então a maioria delas vão estar bloqueadas para chamada.
