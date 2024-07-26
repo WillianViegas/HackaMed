@@ -59,8 +59,9 @@ Para executa-lo você tem 3 opções:
 - Executa-lo via Kubernetes (mais abaixo deixarei alguns passos para fazer junto da documentação do kubernetes)
 
 Vou deixar disponível a collection do postman que usei para testar os fluxos dentro da Pasta do Projeto para facilitar a separação e testes do projeto.
-- Caminho: `HackaMed\src\HackaMed\Collections`
-Basta importa-la no seu postman e alterar o endpoint das requisições para a sua respectiva porta de projeto
+Basta importa-la no seu postman e alterar o endpoint das requisições para a sua respectiva porta de projeto:
+
+Caminho: `HackaMed\src\HackaMed\Collections`.
 
 Com o projeto rodando você pode acessar o swagger para ver as requisições disponíveis. Lembrando que foi implementado a autenticação JWT então a maioria delas vão estar bloqueadas para chamada.
 
