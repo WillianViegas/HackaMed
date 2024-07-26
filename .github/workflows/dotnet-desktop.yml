@@ -114,5 +114,8 @@ jobs:
          kubectl apply -f ./k8s/mongodb-config.yml
          kubectl apply -f ./k8s/private-lb.yml
          kubectl apply -f ./k8s/public-lb.yml
-         
-    # kubectl apply -f ./k8s/
+
+    - name: Rollout Restart
+      run: |
+        kubectl rollout restart deployment hackamed
+    
