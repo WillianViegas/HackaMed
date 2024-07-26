@@ -64,6 +64,14 @@ jobs:
         echo "::set-output name=aws_access_key_id::${{ secrets.AWS_ACCESS_KEY_ID }}"
         echo "::set-output name=aws_secret_access_key::${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         echo "::set-output name=aws_region::${{ secrets.AWS_REGION }}"
+        echo "::set-output name=db_connection_string::${{ secrets.DB_CONNECTION_STRING }}"
+        echo "::set-output name=db_database_name::${{ secrets.DB_DATABASE_NAME }}"
+        echo "::set-output name=db_user::${{ secrets.DB_USER }}"
+        echo "::set-output name=db_password::${{ secrets.DB_PASSWORD }}"
+        echo "::set-output name=mongo_initdb_database::${{ secrets.MONGO_INITDB_DATABASE }}"
+        echo "::set-output name=mongo_initdb_root_username::${{ secrets.MONGO_INITDB_ROOT_USERNAME }}"
+        echo "::set-output name=mongo_initdb_root_password::${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}"
+
 
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
@@ -80,6 +88,13 @@ jobs:
           --from-literal=AWS_SECRET_ACCESS_KEY=${{ steps.set-configmap-variables.outputs.aws_secret_access_key }} \
           --from-literal=AWS_REGION=${{ steps.set-configmap-variables.outputs.aws_region }} \
           --from-literal=AWS_DEFAULT_REGION=${{ steps.set-configmap-variables.outputs.aws_region }} \
+          --from-literal=DatabaseConfig__ConnectionString=${{ steps.set-configmap-variables.outputs.db_connection_string }} \
+          --from-literal=DatabaseConfig__DatabaseName=${{ steps.set-configmap-variables.outputs.db_database_name }} \
+          --from-literal=DatabaseConfig__User=${{ steps.set-configmap-variables.outputs.db_user }} \
+          --from-literal=DatabaseConfig__Password=${{ steps.set-configmap-variables.outputs.db_password }} \
+          --from-literal=MONGO_INITDB_DATABASE=${{ steps.set-configmap-variables.outputs.mongo_initdb_database }} \
+          --from-literal=MONGO_INITDB_ROOT_USERNAME=${{ steps.set-configmap-variables.outputs.mongo_initdb_root_username }} \
+          --from-literal=MONGO_INITDB_ROOT_PASSWORD=${{ steps.set-configmap-variables.outputs.mongo_initdb_root_password }} \
           --dry-run=client -o yaml | kubectl apply -f -
       
 
