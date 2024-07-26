@@ -5,9 +5,11 @@ using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HackaMed.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsuarioController : ControllerBase

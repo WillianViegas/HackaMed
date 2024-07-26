@@ -1,11 +1,13 @@
 ﻿using Application.UseCases;
 using Application.UseCases.Interfaces;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace HackaMed.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AgendaController : ControllerBase
