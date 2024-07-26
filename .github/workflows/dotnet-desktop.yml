@@ -28,31 +28,31 @@ jobs:
     #- name: Tests
      # run: dotnet test ./src/HackaMed/HackaMed.sln
 
-   # - name: Configure AWS Credentials
-   #   uses: aws-actions/configure-aws-credentials@v2
-   #   with:
-   #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-   #     aws-region: ${{ secrets.AWS_REGION }}
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
- #   - name: Docker Login
- #     run: aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
+    - name: Docker Login
+      run: aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
 
-    # - name: Build and Push Docker images
-     # run: |
-      #  cd src
-      #  cd techchallenge-microservico-pagamento
-      #  docker build -t ms-pagamento-img:latest -f techchallenge-microservico-pagamento/Dockerfile .
-      #  docker tag ms-pagamento-img:latest ${{ secrets.AWS_REGISTRY_URL }}:ms-pagamento-img
-      #  docker push ${{ secrets.AWS_REGISTRY_URL }}:ms-pagamento-img
+    - name: Build and Push Docker images
+      run: |
+        cd src
+        cd techchallenge-microservico-pagamento
+        docker build -t hackamed-img:latest -f HackaMed/Dockerfile .
+        docker tag hackamed-img:latest ${{ secrets.AWS_REGISTRY_URL }}:hackamed-img
+        docker push ${{ secrets.AWS_REGISTRY_URL }}:hackamed-img
 
-      # docker tag ms-pedido-img:latest ${{ secrets.DOCKER_HUB_URL }}:ms-pedido-img
-      # docker push ${{ secrets.DOCKER_HUB_URL }}:ms-pedido-img
+        docker tag hackamed-img:latest ${{ secrets.DOCKER_HUB_URL }}:hackamed-img
+        docker push ${{ secrets.DOCKER_HUB_URL }}:hackamed-img
 
 
       # - name: Deploy to EKS
      #   run: |
      #    cd src
-     #   cd techchallenge-microservico-pagamento
+     #   cd HackaMed
       #   aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
       #   kubectl apply -f ./k8s/
