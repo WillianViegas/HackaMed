@@ -1,0 +1,559 @@
+{
+	"info": {
+		"_postman_id": "5d8e3e2e-703d-4ec0-aa73-ddb54a4958ce",
+		"name": "HackaMed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Paciente",
+			"item": [
+				{
+					"name": "1 - Usuario/Login",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"\",\r\n  \"cpf\": \"45926744807\",\r\n  \"crm\": \"\",\r\n  \"senha\": \"Teste@123\",\r\n  \"perfil\": \"Paciente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dados do Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2 - Prontuário",
+					"item": [
+						{
+							"name": "Cadastra Prontuário",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pacienteId\": \"669dd558b96f0d4fa47a8f5d\",\r\n  \"documentos\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Usuario/CadastrarProntuario",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Usuario",
+										"CadastrarProntuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Documento",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pacienteId\": \"669dd558b96f0d4fa47a8f5d\",\r\n  \"titulo\": \"Carterinha\",\r\n  \"decricao\": \"Carteira de vacinação\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Usuario/AdicionarDocumento",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Usuario",
+										"AdicionarDocumento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remover Documento",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pacienteId\": \"669dd558b96f0d4fa47a8f5d\",\r\n  \"titulo\": \"Carterinha\",\r\n  \"decricao\": \"Carteira de vacinação\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Usuario/RemoverDocumento",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Usuario",
+										"RemoverDocumento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter detalhes do prontuário",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Paciente/GetProntuarioByPacienteId/669dd558b96f0d4fa47a8f5d",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Paciente",
+										"GetProntuarioByPacienteId",
+										"669dd558b96f0d4fa47a8f5d"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3- Interação com Medicos",
+					"item": [
+						{
+							"name": "Listar Medicos",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"especialidade\": \"\",\r\n  \"distanciaKM\": \"\",\r\n  \"avaliacoes\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Paciente/GetAllMedicos",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Paciente",
+										"GetAllMedicos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detalhes Agenda Medico",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Agenda/GetAgendaByMedicoId/669f0c02c12218af05ea9eb8",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										"GetAgendaByMedicoId",
+										"669f0c02c12218af05ea9eb8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4 - Consulta",
+					"item": [
+						{
+							"name": "Marcar Consulta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pacienteId\": \"669dd558b96f0d4fa47a8f5d\",\r\n  \"medicoId\": \"669f0c02c12218af05ea9eb8\",\r\n  \"agendamentoId\": \"66a091c71c63cbe1cb7e4de9\",\r\n  \"teleConsulta\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Consulta",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Consulta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Consulta/CancelarConsulta/66a087e15f7060235b6a4ed0?descricao=Me curei com o poder da fé",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta",
+										"CancelarConsulta",
+										"66a087e15f7060235b6a4ed0"
+									],
+									"query": [
+										{
+											"key": "descricao",
+											"value": "Me curei com o poder da fé"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter Consulta pelo Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Medico",
+			"item": [
+				{
+					"name": "1 - Usuario/Login",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Dados do Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2 - Agenda",
+					"item": [
+						{
+							"name": "Obter Agenda pelo Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Agenda/GetAgendaById/669f1d10f270be2da01a4bd8",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										"GetAgendaById",
+										"669f1d10f270be2da01a4bd8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detalhes Agenda Medico",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Agenda/GetAgendaByMedicoId/669f0c02c12218af05ea9eb8",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										"GetAgendaByMedicoId",
+										"669f0c02c12218af05ea9eb8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar Agenda",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"string\",\r\n  \"medicoId\": \"string\",\r\n  \"dataAgendamento\": \"2024-07-24\",\r\n  \"horarioAgendamento\": \"string\",\r\n  \"valor\": 0,\r\n  \"status\": \"string\",\r\n  \"dataCadastro\": \"string\",\r\n  \"dataAlteracao\": \"string\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Agenda/",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Agenda",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"medicoId\": \"669f0c02c12218af05ea9eb8\",\r\n  \"dataAgendamento\": \"2024-07-24\",\r\n  \"horarioAgendamento\": \"17:00\",\r\n  \"valor\": 100,\r\n  \"status\": \"Indisponível\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:44397/Agenda/UpdateAgenda/66a0920a1c63cbe1cb7e4dea",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										"UpdateAgenda",
+										"66a0920a1c63cbe1cb7e4dea"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar Agenda",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Agenda/DeleteAgenda/66a0920a1c63cbe1cb7e4dea",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Agenda",
+										"DeleteAgenda",
+										"66a0920a1c63cbe1cb7e4dea"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3 - Consulta",
+					"item": [
+						{
+							"name": "Cancelar Consulta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Consulta/UpdateConsulta/669f1d71b43ace292bbb6f6a/Ativo",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta",
+										"UpdateConsulta",
+										"669f1d71b43ace292bbb6f6a",
+										"Ativo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Aprovar Consulta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Consulta/AprovarConsulta/66a087e15f7060235b6a4ed0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta",
+										"AprovarConsulta",
+										"66a087e15f7060235b6a4ed0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recusar Consulta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Consulta/RecusarConsulta/66a087e15f7060235b6a4ed0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta",
+										"RecusarConsulta",
+										"66a087e15f7060235b6a4ed0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter Consulta pelo Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Consulta/GetConsultaById/66a19777986b160c28df43d3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Consulta",
+										"GetConsultaById",
+										"66a19777986b160c28df43d3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter detalhes do prontuário",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:44397/Paciente/GetProntuarioByPacienteId/669dd558b96f0d4fa47a8f5d",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "44397",
+									"path": [
+										"Paciente",
+										"GetProntuarioByPacienteId",
+										"669dd558b96f0d4fa47a8f5d"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

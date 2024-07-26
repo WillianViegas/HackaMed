@@ -74,9 +74,9 @@ namespace HackaMed.Controllers
             var medico = new Usuario()
             {
                 Nome = "Marcos Almeida",
-                CRM = "",
+                CRM = "556584",
                 Especialidade = "Cardiologia",
-                Email = "marcos@gmail.com",
+                Email = "",
                 Perfil = EnumPerfil.Medico.ToString(),
                 Senha = "Teste@123",
                 Endereco = new Endereco()
