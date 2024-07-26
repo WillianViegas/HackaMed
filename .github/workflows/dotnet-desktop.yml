@@ -58,6 +58,33 @@ jobs:
         docker tag hackamed-img:latest ${{ secrets.DOCKER_HUB_URL }}:hackamed-img
         docker push ${{ secrets.DOCKER_HUB_URL }}:hackamed-img
 
+    - name: Set AWS ConfigMap Variables
+      id: set-configmap-variables
+      run: |
+        echo "::set-output name=aws_access_key_id::${{ secrets.AWS_ACCESS_KEY_ID }}"
+        echo "::set-output name=aws_secret_access_key::${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        echo "::set-output name=aws_region::${{ secrets.AWS_REGION }}"
+
+    - name: Setup kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.18.0'
+
+    - name: Authenticate to Kubernetes cluster
+      uses: azure/k8s-set-context@v2
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+    - name: Update Kubernetes ConfigMap
+      run: |
+        # Baixar o ConfigMap existente
+        kubectl get configmap my-config -o yaml > configmap.yaml
+        # Modificar o ConfigMap
+        sed -i 's/AWS_ACCESS_KEY_ID:.*/AWS_ACCESS_KEY_ID: '${{ steps.set-configmap-variables.outputs.aws_access_key_id }}'/' configmap.yaml
+        sed -i 's/AWS_SECRET_ACCESS_KEY:.*/AWS_SECRET_ACCESS_KEY: '${{ steps.set-configmap-variables.outputs.aws_secret_access_key }}'/' configmap.yaml
+        sed -i 's/AWS_REGION:.*/AWS_REGION: '${{ steps.set-configmap-variables.outputs.aws_region }}'/' configmap.yaml
+      
 
       # - name: Deploy to EKS
      #   run: |
