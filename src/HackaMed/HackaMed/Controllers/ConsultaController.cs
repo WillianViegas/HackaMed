@@ -2,6 +2,7 @@
 using Application.UseCases.Interfaces;
 using Domain.Entities;
 using Domain.Helpers.Consulta;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HackaMed.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ConsultaController : ControllerBase

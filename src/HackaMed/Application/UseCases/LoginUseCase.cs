@@ -76,8 +76,7 @@ namespace Application.UseCases
                     CPF = usuarioLogin.CPF,
                     CRM = usuarioLogin.CRM,
                     Perfil = usuarioLogin.Perfil,
-                    Status = usuarioLogin.Status,
-                    Token = Guid.NewGuid().ToString(),
+                    Status = usuarioLogin.Status
                 };
 
                 return loginReponse;
