@@ -109,7 +109,7 @@ jobs:
       run:  |
          cd src
          cd HackaMed
-         cd K8s
+         cd k8s
          kubectl apply -f application-services.yml
          kubectl apply -f application-config.yml
          kubectl apply -f mongodb-config.yml
