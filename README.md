@@ -47,7 +47,7 @@ Fluxograma:
 https://www.figma.com/board/iuxlSZqvof7H4K2m6uKLpt/Hackaton-FIAP---HackaMed?node-id=0-1&t=q9p1DjqBWClIjS6R-1
 
 Video explicando a estrutura:
-(adicionar video)
+https://www.youtube.com/watch?v=_QOhr5Zi2Pc
 
 ## Como começar
 
